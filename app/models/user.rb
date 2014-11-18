@@ -3,8 +3,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
   #has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   #validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
-  has_many :groups
-  belongs_to :phone_rental
+  has_many :gardeners
 
   def set_default_role
     self.role ||= :user

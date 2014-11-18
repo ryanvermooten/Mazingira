@@ -1,6 +1,6 @@
 <div class="panel panel-default">
 <strong>Add a Home Gardener</strong>
-<%= form_for([@gardener.group, @gardener]) do |g| %>
+<%= form_for([@gardener.user, @gardener]) do |g| %>
 <%= render "shared/error_messages", :target => @gardener %>
 <fieldset>
 
@@ -14,40 +14,26 @@
     </p>
 
     <p>
-      <%= g.label :contact_number %> 
-      <%= g.text_field :contact_number %>
-    </p>
-
-    <p>
-      <%= g.label :address %>
-      <%= g.text_field :address %>
-    </p>
-    <p>
       <%= g.label :id_number %>
       <%= g.number_field :id_number %>
       </p>
 
       <p>
-      <%= g.label :race %> <br/>
-       <%= g.radio_button :race, :black %> 
-      <%= g.label :race_white, "Black" %> |
+      <%= g.label :age %>
+      <%= g.number_field :age %>
+      </p>
 
-     <%= g.radio_button :race, :coloured %> 
-     <%= g.label :race_coloured, "Coloured" %> <br/>
+      <p>
+      <%= g.label :gender %> <br/>
+       <%= g.radio_button :gender, :male %> 
+       <%= g.label :gender_male, "Male" %> <br/>
+        
 
-     <%= g.radio_button :race, :indian %> 
-     <%= g.label :race_indian, "Indian" %> |
+     <%= g.radio_button :gender, :female %> 
+     <%= g.label :gender_femaile, "Female" %> <br/>
 
-      <%= g.radio_button :race, :white %> 
-      <%= g.label :race_white, "White" %> <br/>
-      
-       <%= g.radio_button :race, :other %> 
-      <%= g.label :race_other, "Other" %> <br/>
-
-
-    <%= g.label :avatar, "please take a picture of the gardener" %>
-    <%= g.file_field :avatar %>
-    </p>
+     <%= g.radio_button :gender, :other %> 
+     <%= g.label :gender_other, "Other" %> |
 
 <div class="form-actions">
        <%= g.submit 'continue', :class =>  'btn btn-lg btn-success' %>
