@@ -62,5 +62,5 @@ def new
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def gardener_params
-      params.require(:gardener).permit(:first_name, :last_name, :id_number, :user_id, :age, :gender)
+      params.require(:gardener).permit(:first_name, :last_name, :user_id, :age, :gender)
     end
