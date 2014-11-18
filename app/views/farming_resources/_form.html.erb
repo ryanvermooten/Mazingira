@@ -1,0 +1,77 @@
+<%= form_for([@group, @gardener, @farming_resource]) do |g| %>
+<div class="panel panel-default">
+
+<%= render "shared/error_messages", :target => @farming_resource %>
+
+  <div class="btn-group btn-group-justified">
+       <div class="field">
+      <h4> 1.) Number of people in the household engaged in farming</h4> <br/>
+     <%= g.number_field :number_of_people_engaged_in_farming %> 
+     </div>
+
+     <div class="field">
+       <h4> 2.1) Number of farming spaces </h4> <br/>
+      <%= g.text_field :number_of_farming_spaces %>
+  </div>
+  <div class="field">
+  <h4> 2.2) Type of farming space </h4> <br/>
+      <%= g.radio_button :type_of_farming_space, :residential_or_housing_space %> 
+       <%= g.label :type_of_farming_space, "Residential or housing space" %> <br/>
+        
+      <%= g.radio_button :type_of_farming_space, :organizational_space %> 
+       <%= g.label :type_of_farming_space, "Organizational space" %> <br/>
+
+       <%= g.radio_button :type_of_farming_space, :communal_space %> 
+       <%= g.label :type_of_farming_space, "Communal space" %> <br/>
+
+       <%= g.radio_button :type_of_farming_space, :open_space %> 
+       <%= g.label :type_of_farming_space, "Open space" %> <br/>
+  
+       <%= g.radio_button :type_of_farming_space, :other %> 
+       <%= g.label :type_of_farming_space, "Other" %> <br/>
+     </div>
+  </div>
+  <div class="field">
+  <h4> 2.3) Size of farming space </h4> <br/>
+      <%= g.radio_button :size_of_farming_space, :up_to_100_sq_ft%> 
+       <%= g.label :type_of_farming_space, "Up to 100 sq feet" %> <br/>
+       
+        <%= g.radio_button :size_of_farming_space, :from_100sq_ft_to_1_8th_acre%> 
+       <%= g.label :type_of_farming_space, "100 sq feet to 1/8th acre" %> <br/>
+   
+        <%= g.radio_button :size_of_farming_space, :from_1_8th_acre_to_1_4th_acre %> 
+       <%= g.label :type_of_farming_space, "1/8 to 1/4 acre" %> <br/>
+  
+        <%= g.radio_button :size_of_farming_space, :from_1_4th_acre_to_1_2th_acre %> 
+       <%= g.label :type_of_farming_space, "1/4 to 1/2 acre" %> <br/>
+
+         <%= g.radio_button :size_of_farming_space, :from_1_2th_to_full_acre %> 
+       <%= g.label :type_of_farming_space, "1/4 to 1/2 acre" %> <br/>
+   
+         <%= g.radio_button :size_of_farming_space, :one_acre_plus %> 
+       <%= g.label :type_of_farming_space, "one acre plus" %> <br/>
+        </div>
+  <div class="field">
+  <h4> 3.) Financial capital for farming </h4> <br/>
+       <%= g.radio_button :financial_capital_for_farming, :non_farm_income %> 
+       <%= g.label :financial_capital_for_farming, "Non farm income" %> <br/>
+        
+     <%= g.radio_button :financial_capital_for_farming, :farm_income %> 
+     <%= g.label :financial_capital_for_farming, "Farm income" %> <br/>
+
+     <%= g.radio_button :financial_capital_for_farming, :savings %> 
+     <%= g.label :financial_capital_for_farming, "Savings" %> <br/>
+
+       <%= g.radio_button :financial_capital_for_farming, :Group_savings %> 
+     <%= g.label :financial_capital_for_farming, "Group Savings" %> <br/>
+
+     <%= g.radio_button :financial_capital_for_farming, :loan_from_bank %> 
+     <%= g.label :financial_capital_for_farming, "Loan from bank" %> <br/>
+
+  <div class="form-actions">
+      <%= g.submit 'continue', :class =>  'btn btn-lg btn-success' %>
+  </div>
+
+</div>
+<% end %>
+
