@@ -1,12 +1,11 @@
 class GardenersController < ApplicationController
+   before_action :authenticate_user!
 
- # GET /groups/:group_id/gardeners
-  # GET /groups/:group_id/gardeners.xml
+ # GET /gardeners/:gardener_id/gardeners
+  # GET /gardeners/:gardener_id/gardeners.xml
   def index
-    #1st you retrieve the group thanks to params[:group_id]
-    group = Group.find(params[:group_id])
-    #2nd you get all the gardeners of this group
-    @gardeners= group.gardeners
+    #1st you retrieve the gardener thanks to params[:gardener_id]
+   @gardeners = current_user.gardeners
 
     respond_to do |format|
         format.html # index.html.erb
@@ -15,100 +14,53 @@ class GardenersController < ApplicationController
   end
 
   def show
-#1st you retrieve the group thanks to params[:group_id]
-    group = Group.find(params[:group_id])
-#2nd you retrieve the comment thanks to params[:id]
-    @gardener = group.gardeners.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml {render :xml => @gardener}
+@gardener = Gardener.includes(:gardeners).where(id: params[:id]).first!
     end
+
+def new
+    @gardener = Gardener.new
   end
 
-# GET /groups/:group_id/gardeners/new
-# GET /groups/:group_id/gardeners/new.xml
-  def new
-    #1st you retrieve the group thanks to params[:group_id]
-    group= Group.find(params[:group_id])
-    #2nd you build a new comment
-    @gardener = group.gardeners.build
+ def create
+    @gardener = Gardener.new(gardener_params)
+    @gardener.user_id = current_user.id
 
-    respond_to do |format|
-      format.html #new.html.erb
-      format.xml {render :xml => @gardener }
-    end
-  end
-
-# GET /groups/:group_id/gardeners/:id/edit
-  def edit
-    #1st you retrieve the group thanks to params[:group_id]
-    group = Group.find(params[:group_id])
-    #2nd you retrieve the comment thanks to params[:id]
-    @gardener = group.gardeners.find(params[:id])
-  end
-
-# POST /groups/:group_id/group_gardeners
-# POST /groups/:group_id/group_gardeners.xml
-  def create
-    #1st you retrieve the group thanks to params[:group_id]
-    group = Group.find(params[:group_id])
-    #2nd you create the trainer wih arguments in params [:gardener]
-    @gardener = group.gardeners.new(gardener_params)
-
-    respond_to do |format|
       if @gardener.save
-        #1st argument of redirect_to is an array, in order to build the correct route to the nested resource gardener
-      format.html {redirect_to([@gardener.group, @group], :notice => 'Home Gardener was successfully created' )}
-      format.xml {render :xml => @gardener, :status => :created, :location => [@gardener.group,@gardener] }
+       redirect_to new_gardener_living_arrangement_path(@gardener)
       else
-        format.html {render :action => "new"}
-        format.xml {render :xml => @gardener.errors, status: :unprocessable_entity}
+       render :new
       end
     end
   end
-
-
+  # PATCH/PUT /gardeners/1
+  # PATCH/PUT /gardeners/1.json
   def update
-    #1st you retrieve the group thanks to params[:group_id]
-    group = Group.find(params[:group_id])
-    @gardener = group.gardeners.find(params[:id])
-
+    @gardener = gardener.find(params[:id])
     respond_to do |format|
-      if @gardener.update_attributes(gardener_params)
-        #1st argument of redirect_to is an array, in order to build the correct route to the nested resource gardener
-     format.html {redirect_to([@gardener.group, @gardener], :notice => 'Gardener was successfully updated')}
-     format.xml { head :ok}
+      if @gardener.update(gardener_params)
+        redirect_to new_gardener_living_arrangements_path(@gardener)
       else
-        format.html {render :action => "edit"}
-        format.xml {render :xml => @gardener.errors, :status => :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @gardener.errors, status: :unprocessable_entity }
       end
     end
   end
 
+  # DELETE /gardeners/1
+  # DELETE /gardeners/1.json
   def destroy
-    #1st you retrieve the group thanks to params[:group_id]
-    group= Group.find(params[:group_id])
-    #2nd you retrieve the gardener thanks to params[:id]
-    @gardener = group.gardeners.find(params[:id])
+    @gardener = gardener.find(params[:id])
     @gardener.destroy
-
     respond_to do |format|
-      #1st argument reference the path /groups/:group_id/gardeners
-      format.html {redirect_to(group_gardeners_url)}
-      format.xml {head :ok}
+      format.html { redirect_to gardeners_url, notice: 'gardener was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
 
-  def gardener_params
-   params.require(:gardener).permit(:first_name, :race, :last_name, :contact_number, :address, :group_id, :garden_at_home, :document, :id_number, :avatar)
-  end
-
-  def group_params
-  params.require(:group).permit(:name, :area, :group_id)
-  end
-end
-
-
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def gardener_params
+      params.require(:gardener).permit(:first_name, :last_name, :id_number, :user_id, :age, :gender)
+    end

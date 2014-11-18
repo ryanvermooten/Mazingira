@@ -1,45 +1,21 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  resources :phone_rentals
-
-  resources :extras
-
-  resources :phones
-
-  resources :groups
 
   resources :troubleshoots
 
   root to: 'visitors#index'
   devise_for :users
   resources :users
-  resources :groups do
     resources :gardeners do
-      resources :gardens
       resources :living_arrangements
-      resources :sfls
-      resources :educations
-      resources :employments
-      resources :grants
-      resources :abilities
-      resources :healths
-      resources :general_statements
-      resources :experiences
-      resources :expenditures
-      resources :support_visits
-      resources :follow_up_visit_gardens
-      resources :follow_up_visit_eatings
-      resources :follow_up_visit_sellings
-      resources :follow_up_visit_impressions
+      resources :farming_resources
   end
-   resources :attendance_registers
    resources :admin do
     resources :metrics
   end
   end
 
-end
 
   #get '/dropbox/authorize', to: 'dropbox#authorize', :as => :dropbox_auth
  # get '/dropbox/callback', to: 'dropbox#callback', :as =>  :dropbox_callback

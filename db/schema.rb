@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118082834) do
+ActiveRecord::Schema.define(version: 20141118110041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 20141118082834) do
     t.string  "type_of_farming_space"
     t.string  "size_of_farming_space"
     t.string  "financial_capital_for_farming"
+    t.integer "gardener_id"
+  end
+
+  create_table "gardeners", force: true do |t|
+    t.string  "first_name"
+    t.string  "last_name"
+    t.integer "id_number"
+    t.integer "age"
+    t.string  "gender"
+    t.integer "user_id"
   end
 
   create_table "living_arrangements", force: true do |t|
@@ -64,14 +74,7 @@ ActiveRecord::Schema.define(version: 20141118082834) do
     t.integer "number_of_people_in_household_children"
     t.string  "housing_type"
     t.string  "location"
-  end
-
-  create_table "table_gardeners", force: true do |t|
-    t.string  "first_name"
-    t.string  "last_name"
-    t.integer "id_number"
-    t.integer "age"
-    t.string  "gender"
+    t.integer "gardener_id"
   end
 
   create_table "users", force: true do |t|
